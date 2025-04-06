@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import type * as THREE from "three";
 import { selectObject, updateObject } from "../store/objectsSlice";
 import type { SceneObject } from "../types/scene";
+import { Casher } from "./meshs/Casher";
+import { RefrigModel } from "./meshs/Refrigerator";
 // import { Character } from "../character/mesh/Character";
 import { ShelfModel } from "./meshs/ShelfModel";
 
@@ -71,15 +73,32 @@ export const FieldObject = React.memo(function FieldObject({
 
 	if (!visible) return null;
 
+	console.log(rotation);
+
+	const toRads = (count: number) => (count * Math.PI) / 180;
+
 	return (
 		// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
 		<group onClick={handleClick}>
-			{type === "shelf" && (
+			{type === "shelf" ? (
 				<ShelfModel
 					ref={meshRef}
-					position={[position[0], position[1] + 0.47, position[2] - 0.1]}
+					position={[position[0], position[1], position[2]]}
+					rotation={[Math.PI / 2, 0, toRads(rotation)]}
 				/>
-			)}
+			) : type === "refrigerator" ? (
+				<RefrigModel
+					ref={meshRef}
+					position={[position[0], position[1] + 0.47, position[2] - 0.1]}
+					rotation={[0, toRads(rotation), 0]}
+				/>
+			) : type === "cashRegister" ? (
+				<Casher
+					ref={meshRef}
+					position={[position[0], position[1] + 0.24, position[2]]}
+					rotation={[Math.PI / 2, 0, toRads(rotation + 90)]}
+				/>
+			) : null}
 		</group>
 	);
 });

@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectObject } from "../store/objectsSlice";
 import type { RootState } from "../store/store";
-import type { SceneObject } from "../types/scene";
+// import type { SceneObject } from "../types/scene";
 
 function ObjectsList() {
 	const dispatch = useDispatch();
 	const objects = useSelector((state: RootState) => state.objects.items);
-	const selectedId = useSelector(
-		(state: RootState) => state.objects.selectedId,
-	);
+	// const selectedId = useSelector(
+	// 	(state: RootState) => state.objects.selectedId,
+	// );
 
 	const handleSelect = (id: number) => {
 		dispatch(selectObject(id));

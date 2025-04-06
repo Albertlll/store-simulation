@@ -28,6 +28,7 @@ export const CustomerCharacter = ({
 	const groupRef = useRef<THREE.Group>(null);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [progress, setProgress] = useState(0);
+	console.log(progress);
 
 	const { nodes, materials } = useGLTF(
 		"/models/buyer.glb",

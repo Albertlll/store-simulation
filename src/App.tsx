@@ -3,12 +3,14 @@ import { Canvas } from "@react-three/fiber";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type * as THREE from "three";
+import { HeatmapPlane } from "./HeatMap";
+import { CharactersManager } from "./character/CharactersManager";
 import { FieldObject } from "./models/FieldObject";
 import { addObject } from "./store/objectsSlice";
 import type { RootState } from "./store/store";
 import type { SceneObject, SceneObjectType } from "./types/scene";
 import { MainUI } from "./ui/mainUi";
-import { Toolbar } from "./ui/toolbar";
+// import { Toolbar } from "./ui/toolbar";
 import { snapToGrid } from "./utils/gridUtil";
 
 const GRID_SIZE = 20;
@@ -31,6 +33,7 @@ export default function App() {
 
 		const newObj: SceneObject = {
 			id: Date.now(),
+			rotation: 0,
 			type,
 			position: [0, 0, 0],
 			gridPosition: [0, 0],
@@ -75,6 +78,8 @@ export default function App() {
 				<OrbitControls makeDefault />
 
 				{/* Плоскость для размещения объектов */}
+
+				<HeatmapPlane />
 				<Plane
 					ref={planeRef}
 					args={[GRID_SIZE * CELL_SIZE, GRID_SIZE * CELL_SIZE]}
@@ -101,6 +106,8 @@ export default function App() {
 						cellSize={CELL_SIZE}
 					/>
 				))}
+
+				<CharactersManager />
 			</Canvas>
 		</div>
 	);

@@ -1,9 +1,11 @@
 // components/mainUi.tsx
+import { toggleHeatmap } from "../store/simulationSlice";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { toggleViewMode } from "../store/uiSlice";
 import type { SceneObjectType } from "../types/scene";
 import { ObjectInfoPanel } from "./ObjectInfoPanel";
 import ObjectsList from "./ObjectsList";
+import { SimulationSetupPanel } from "./simulationSetup";
 import { Toolbar } from "./toolbar";
 
 type ToolbarProps = {
@@ -24,8 +26,8 @@ export const MainUI = ({ onDragStart }: ToolbarProps) => {
 					<div className="absolute flex flex-col h-[400px]  top-5 left-5 z-[100] gap-2  rounded-xl text-white">
 						<Toolbar onDragStart={onDragStart} />
 						<ObjectInfoPanel />
+						<SimulationSetupPanel />
 					</div>
-
 					{/* Правое облачко - Список объектов */}
 					<ObjectsList />
 				</>
@@ -55,15 +57,10 @@ export const MainUI = ({ onDragStart }: ToolbarProps) => {
 						<h3 className="text-lg font-semibold mb-3">Управление</h3>
 						<button
 							type="button"
+							onClick={() => dispatch(toggleHeatmap())}
 							className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded transition-colors mb-2 w-full"
 						>
 							Тепловая карта
-						</button>
-						<button
-							type="button"
-							className="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded transition-colors w-full"
-						>
-							Анализ очередей
 						</button>
 					</div>
 				</>
