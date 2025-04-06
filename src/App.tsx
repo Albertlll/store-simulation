@@ -7,6 +7,7 @@ import { FieldObject } from "./models/FieldObject";
 import { addObject } from "./store/objectsSlice";
 import type { RootState } from "./store/store";
 import type { SceneObject, SceneObjectType } from "./types/scene";
+import { MainUI } from "./ui/mainUi";
 import { Toolbar } from "./ui/toolbar";
 import { snapToGrid } from "./utils/gridUtil";
 
@@ -46,7 +47,7 @@ export default function App() {
 			onDragOver={(e) => e.preventDefault()}
 			onDrop={handleDrop}
 		>
-			<Toolbar onDragStart={handleDragStart} />
+			<MainUI onDragStart={handleDragStart} />
 
 			<Canvas
 				camera={{ position: [0, 10, 15], fov: 50 }}

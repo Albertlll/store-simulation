@@ -8,6 +8,8 @@ type ShelfGLTFResult = GLTF & {
 	materials: Record<string, THREE.MeshStandardMaterial>;
 };
 
+const degreesToRadians = (degrees: number) => degrees * (Math.PI / 180);
+
 type ShelfModelProps = JSX.IntrinsicElements["mesh"] & {
 	position?: [number, number, number];
 };

@@ -2,9 +2,9 @@ import { useFrame, useThree } from "@react-three/fiber";
 import React, { useRef, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import type * as THREE from "three";
-import { updateObject } from "../store/objectsSlice";
+import { selectObject, updateObject } from "../store/objectsSlice";
 import type { SceneObject } from "../types/scene";
-import { Character } from "./meshs/Character";
+// import { Character } from "../character/mesh/Character";
 import { ShelfModel } from "./meshs/ShelfModel";
 
 type FieldObjectProps = SceneObject & {
@@ -25,11 +25,18 @@ export const FieldObject = React.memo(function FieldObject({
 	planeRef,
 	gridOffset,
 	cellSize,
+	rotation,
 }: FieldObjectProps) {
-	const dispatch = useDispatch();
 	const meshRef = useRef<THREE.Mesh>(null);
 	const [localDragging, setLocalDragging] = useState(isDragging);
 	const { camera, raycaster, mouse } = useThree();
+
+	const dispatch = useDispatch();
+
+	const handleClick = () => {
+		console.log("хаха");
+		dispatch(selectObject(id));
+	};
 
 	useEffect(() => {
 		setLocalDragging(isDragging);
@@ -54,7 +61,7 @@ export const FieldObject = React.memo(function FieldObject({
 				gridPosition: [gridX, gridZ] as [number, number],
 				visible: true,
 				isDragging: false,
-				rotation: 0,
+				rotation: rotation,
 			};
 
 			dispatch(updateObject(updatedObject));
@@ -65,14 +72,14 @@ export const FieldObject = React.memo(function FieldObject({
 	if (!visible) return null;
 
 	return (
-		<>
+		// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
+		<group onClick={handleClick}>
 			{type === "shelf" && (
 				<ShelfModel
 					ref={meshRef}
 					position={[position[0], position[1] + 0.47, position[2] - 0.1]}
 				/>
 			)}
-			{/* ... (остальные типы объектов) ... */}
-		</>
+		</group>
 	);
 });
